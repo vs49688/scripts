@@ -56,6 +56,7 @@ unset RESOLUTION
 if [ "$(hostname)" = "ZANE-DEVPC" ]; then
 	xrandr --output DP-4 --right-of DP-0
 	xrandr --output DP-7 --right-of DP-4
+	xrandr --output DP-4 --primary
 fi
 
 export GTK_THEME=Arc-Dark
