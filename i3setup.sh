@@ -7,17 +7,17 @@
 # - Main Display is eDP-1
 # - Touchpad ID is 06CB:7A13
 #
-# In ZANE-DEVPC:
+# In DEMORGOGON:
 # - Fix the monitor arrangement
 ##
 
-if [ "$(hostname)" = "ZANE-DEVPC" ]; then
+if [ "$(hostname)" = "DEMORGOGON" ]; then
 	# Fix the workstation's monitors
 	xrandr --output DP-4 --right-of DP-0
 	xrandr --output DP-7 --right-of DP-4
 	xrandr --output DP-4 --primary
 elif [ "$(hostname)" = "TWILYSPARKLE" ]; then
-	xrandr --output eDP-1 --primary
+	xrandr --output eDP-1-1 --primary
 
 	TOUCHPAD_ID=$(xinput list | sed -nr 's/^.+06CB:7A13.+id=([0-9]+).+$/\1/p')
 	if [ ! -z $TOUCHPAD_ID ]; then
