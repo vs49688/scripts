@@ -1,0 +1,6 @@
+/.vscode/
+**/__pycache__/
+**/*.map
+**/*.max
+**/*.vmf
+/venv/

@@ -10,7 +10,8 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `le-namesilo/namesilo.py`   | Mini NameSilo API implementation. |
 | `le-namesilo/ns-auth.py`    | Certbot NameSilo Auth Hook. |
 | `le-namesilo/ns-cleanup.py` | Certbot NameSilo Cleanup Hook. |
-
+| `vmf2map.py`                | VMF -> MAP converter. |
+| `vmf2map-old.py`            | VMF -> MAP converter (circa-2009 version). Don't use. |
 ## License
 
 [CC0-1.0](./LICENSE).
