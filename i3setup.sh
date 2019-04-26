@@ -21,7 +21,7 @@ elif [ "$(hostname)" = "TWILYSPARKLE" ]; then
 	xrandr --output eDP-1 --primary --mode 3840x2160
 
 	# If the external's connected, set it up
-	if [ ! -z $(xrandr | grep 'HDMI-1 connected') ]; then
+	if [ ! -z "$(xrandr | grep 'HDMI-1 connected')" ]; then
 		xrandr --output HDMI-1 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of eDP-1
 	fi
 
