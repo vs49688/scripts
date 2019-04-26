@@ -5,6 +5,7 @@
 # In TWILYSPARKLE (Dell XPS 15 9550)
 # - Enable natural and horizontal scrolling
 # - Main Display is eDP-1
+# - Configure the external monitor (if connected)
 # - Touchpad ID is 06CB:7A13
 #
 # In DEMORGOGON:
@@ -17,7 +18,12 @@ if [ "$(hostname)" = "DEMORGOGON" ]; then
 	xrandr --output DP-7 --right-of DP-4
 	xrandr --output DP-4 --primary
 elif [ "$(hostname)" = "TWILYSPARKLE" ]; then
-	xrandr --output eDP-1-1 --primary
+	xrandr --output eDP-1 --primary --mode 3840x2160
+
+	# If the external's connected, set it up
+	if [ ! -z $(xrandr | grep 'HDMI-1 connected') ]; then
+		xrandr --output HDMI-1 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of eDP-1
+	fi
 
 	TOUCHPAD_ID=$(xinput list | sed -nr 's/^.+06CB:7A13.+id=([0-9]+).+$/\1/p')
 	if [ ! -z $TOUCHPAD_ID ]; then
