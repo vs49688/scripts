@@ -10,9 +10,15 @@
 #
 # In DEMORGOGON:
 # - Fix the monitor arrangement
+#
+# In CAPRICA:
+# - Fix the monitor arrangement
 ##
 
-if [ "$(hostname)" = "DEMORGOGON" ]; then
+if [ "$(hostname)" = "CAPRICA" ]; then
+	xrandr --output DVI-I-1 --primary --mode 1920x1080 --right-of DP-0
+	xrandr --output HDMI-0 --mode 1920x1080 --right-of DVI-I-1
+elif [ "$(hostname)" = "DEMORGOGON" ]; then
 	# Fix the workstation's monitors
 	xrandr --output DP-4 --right-of DP-0
 	xrandr --output DP-7 --right-of DP-4
