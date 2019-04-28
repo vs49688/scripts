@@ -12,6 +12,8 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `le-namesilo/ns-cleanup.py` | Certbot NameSilo Cleanup Hook. |
 | `vmf2map.py`                | VMF -> MAP converter. |
 | `vmf2map-old.py`            | VMF -> MAP converter (circa-2009 version). Don't use. |
+| `usbip-util.sh`             | Utility script to handle connecting a controller over usbip. |
+
 ## License
 
 [CC0-1.0](./LICENSE).
