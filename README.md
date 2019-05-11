@@ -14,6 +14,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `vmf2map-old.py`            | VMF -> MAP converter (circa-2009 version). Don't use. |
 | `usbip-util.sh`             | Utility script to handle connecting a controller over usbip. |
 | `gh-relpub.py`              | Lightweight script to create a GitHub release and upload assets. |
+| `startgame.sh`              | Game launching script to make Steam streaming easier. |
 
 ## License
 
