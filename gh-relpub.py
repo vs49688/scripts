@@ -70,6 +70,8 @@ class ghapi(object):
 			content_type = 'application/x-rpm'
 		elif flname.endswith('.tar.gz'):
 			content_type = 'application/gzip'
+		elif flname.endswith('.exe'):
+			content_type = 'application/vnd.microsoft.portable-executable'
 		else:
 			content_type = 'application/octet-stream'
 
