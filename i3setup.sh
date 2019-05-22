@@ -22,8 +22,8 @@ if [ "$(hostname)" = "CAPRICA" ]; then
 elif [ "$(hostname)" = "DEMOGORGON" ]; then
 	# Fix the workstation's monitors
 	xrandr \
-		--output DP-0 --mode 3840x2160 --pos 0x0 \
-		--output DP-4 --mode 3840x2160 --primary --right-of DP-0 \
+		--output DP-0 --mode 3840x2160 --pos 0x0 --scale 1x1 \
+		--output DP-4 --mode 3840x2160 --primary --right-of DP-0 --scale 1x1 \
 		--output DP-7 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+7680+0 --right-of DP-4
 elif [ "$(hostname)" = "TWILYSPARKLE" ]; then
 	# xrandr --output eDP-1 --primary --mode 3840x2160
