@@ -15,6 +15,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `usbip-util.sh`             | Utility script to handle connecting a controller over usbip. |
 | `gh-relpub.py`              | Lightweight script to create a GitHub release and upload assets. |
 | `startgame.sh`              | Game launching script to make Steam streaming easier. |
+| `totpcvt.py`                | Convert an andOTP JSON Backup to a LaTex file for offline backup. |
 
 ## License
 
