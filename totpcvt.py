@@ -2,6 +2,11 @@
 ##
 # Feed this script a andOTP JSON Backup.
 #
+# https://github.com/vs49688/scripts/
+# Zane van Iperen <zane@zanevaniperen.com>
+#
+# SPDX-License-Identifier: CC0-1.0
+#
 # * Make sure all arguments are LaTeX compatible
 # * `qrencode` needs to be installed
 # * Compile the resulting .tex file with pdflatex/xelatex
