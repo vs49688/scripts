@@ -2,7 +2,7 @@
 ##
 # Source in ~/.profile to handle switching from MATE<->i3
 #
-# In TWILYSPARKLE (Dell XPS 15 9550)
+# In MORNINGSTAR (Dell XPS 15 9550)
 # - Enable natural and horizontal scrolling
 # - Main Display is eDP-1
 # - Configure the external monitor (if connected)
@@ -22,10 +22,10 @@ if [ "$(hostname)" = "CAPRICA" ]; then
 elif [ "$(hostname)" = "DEMOGORGON" ]; then
 	# Fix the workstation's monitors
 	xrandr \
-		--output DP-0 --mode 3840x2160 --pos 0x0 --scale 1x1 \
-		--output DP-4 --mode 3840x2160 --primary --right-of DP-0 --scale 1x1 \
-		--output DP-7 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+7680+0 --right-of DP-4
-elif [ "$(hostname)" = "TWILYSPARKLE" ]; then
+		--output DP-7 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+0+0 \
+		--output DP-4 --mode 3840x2160 --pos 3840x0 --scale 1x1 --primary \
+		--output DP-0 --mode 3840x2160 --pos 7680x0 --scale 1x1
+elif [ "$(hostname)" = "MORNINGSTAR" ]; then
 	# xrandr --output eDP-1 --primary --mode 3840x2160
 	# if [ ! -z "$(xrandr | grep 'HDMI-1 connected')" ]; then
 	# 	xrandr --output HDMI-1 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of eDP-1
