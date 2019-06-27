@@ -33,13 +33,14 @@ class ghapi(object):
 	def _post_url_json(self, url, data, method='POST'):
 		return self._post_url_raw(url, json.dumps(data).encode('utf-8'), 'application/json', method)
 
-	def create_release(self, owner, repo, tag, body, files):
+	def create_release(self, owner, repo, tag, body, prerelease, files):
 		release = {
 			'tag_name': tag,
 			'target_commitish': 'master',
 			'name': tag,
 			'body': body,
-			'draft': True
+			'draft': True,
+			'prerelease': prerelease
 		}
 
 		x = urllib.parse.urlparse(self._api)
@@ -51,7 +52,6 @@ class ghapi(object):
 			'',
 			''
 		))
-
 		result = self._post_url_json(url, release)
 		if result[0] != 201:
 			raise Exception('Error {0} when creating release'.format(result[0]))
@@ -93,7 +93,7 @@ class ghapi(object):
 			'name': rel['name'],
 			'body': rel['body'],
 			'draft': False,
-			'prerelease': False
+			'prerelease': rel['prerelease']
 		}
 
 		result = self._post_url_json(rel['url'], release, 'PATCH')
@@ -130,6 +130,7 @@ if __name__ == '__main__':
 		default=os.environ['GITHUB_API_TOKEN'] if 'GITHUB_API_TOKEN' in os.environ else None,
 		required='GITHUB_API_TOKEN' not in os.environ
 	)
+	parser.add_argument('--prerelease', action='store_true')
 	parser.add_argument('owner',	type=str, help='the user or organisation')
 	parser.add_argument('repo',		type=str, help='the repo name')
 	parser.add_argument('tag',		type=str, help='the git tag')
@@ -138,7 +139,7 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 	gh = ghapi(args.api, args.token)
 
-	release = gh.create_release(args.owner, args.repo, args.tag, build_description(args.file), args.file)
+	release = gh.create_release(args.owner, args.repo, args.tag, build_description(args.file), args.prerelease, args.file)
 	for f in args.file:
 		gh.upload_file(release, f)
 	gh.publish_release(release)
