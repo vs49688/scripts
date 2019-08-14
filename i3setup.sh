@@ -4,7 +4,7 @@
 #
 # In MORNINGSTAR (Dell XPS 15 9550)
 # - Enable natural and horizontal scrolling
-# - Main Display is eDP-1
+# - Main Display is eDP-1 on intel, eDP-1-1 on nvidia
 # - Configure the external monitor (if connected)
 # - Touchpad ID is 06CB:7A13
 #
@@ -26,15 +26,22 @@ elif [ "$(hostname)" = "DEMOGORGON" ]; then
 		--output DP-4 --mode 3840x2160 --pos 3840x0 --scale 1x1 --primary \
 		--output DP-0 --mode 3840x2160 --pos 7680x0 --scale 1x1
 elif [ "$(hostname)" = "MORNINGSTAR" ]; then
-	# xrandr --output eDP-1 --primary --mode 3840x2160
+
+	if [ "$(prime-select query)" = "nvidia" ]; then
+		MAIN_DISPLAY="eDP-1-1"
+	else
+		MAIN_DISPLAY="eDP-1"
+	fi
+
+	# xrandr --output ${MAIN_DISPLAY} --primary --mode 3840x2160
 	# if [ ! -z "$(xrandr | grep 'HDMI-1 connected')" ]; then
-	# 	xrandr --output HDMI-1 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of eDP-1
+	# 	xrandr --output HDMI-1 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of ${MAIN_DISPLAY}
 	# fi
 
 	# Drop to 1080p so the system's actually usable.
-	xrandr --output eDP-1 --primary --mode 1920x1080
+	xrandr --output ${MAIN_DISPLAY} --primary --mode 1920x1080
 	if [ ! -z "$(xrandr | grep 'HDMI-1 connected')" ]; then
-		xrandr --output HDMI-1 --mode 1920x1080 --right-of eDP-1
+		xrandr --output HDMI-1 --mode 1920x1080 --right-of ${MAIN_DISPLAY}
 	fi
 
 	TOUCHPAD_ID=$(xinput list --id-only 'DLL06E4:01 06CB:7A13 Touchpad')
