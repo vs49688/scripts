@@ -18,10 +18,12 @@ import json
 import sys
 import urllib.parse
 import re
-
+from collections import namedtuple
 import subprocess
 
-REGEX_LABEL = re.compile(r'^(.+) - (.+)$')
+entry = namedtuple('entry', ['url', 'filename', 'issuer', 'label', 'username'])
+
+REGEX_LABEL = re.compile(r'^(.+) - ((.+):(.+))$')
 
 if len(sys.argv) != 3:
     print('Usage: {0} <name> <email>'.format(sys.argv[0]), file=sys.stderr)
@@ -42,16 +44,17 @@ for e in data:
         'secret': e['secret']
     }
 
+    # These won't actually import correctly, but the user
+    # should be able to decode it and add it manually
     if e['type'] != 'STEAM':
         query['period'] = int(e['period'])
 
     # andOTP puts a "-" in between the label and issuer
     m = re.match(REGEX_LABEL, e['label'])
-    if m:
-        label, issuer = m[1], m[2]
-    else:
-        label, issuer = e['label'], e['label']
-    
+    if not m:
+        raise Exception('invalid label')
+
+    issuer, label = m[1], m[2]
     query['issuer'] = issuer
 
     parts = [
@@ -63,10 +66,15 @@ for e in data:
         ''
     ]
 
-    url = urllib.parse.urlunparse(parts)
-    filename = 'qr_{0:0>2}.png'.format(i)
-    subprocess.run(['qrencode', '-t', 'PNG', '-v', '10', '-o', filename, '--', url], check=True)
-    urls.append((url, filename, label, issuer))
+    e = entry(
+        url=urllib.parse.urlunparse(parts),
+        filename='qr_{0:0>2}.png'.format(i),
+        issuer=issuer,
+        label=label,
+        username=m[4]
+    )
+    subprocess.run(['qrencode', '-t', 'PNG', '-v', '10', '-o', e.filename, '--', e.url], check=True)
+    urls.append(e)
     #print('\\noindent\\includegraphics{{../qr_{0:0>2}.png}}'.format(i))
     i += 1
 
@@ -102,18 +110,18 @@ for i in range(len(urls)):
     #     print()
     #     print(r'    \newpage')
 
-    if i % 3 == 0:
+    if i % 2 == 0:
         print()
 
-    safeurl = urls[i][0].replace('%', '\\%')
+    safeurl = urls[i].url.replace('%', '\\%')
     #safeurl = safeurl.replace('&', '\\&')
     #safeurl = safeurl.replace('_', '\\_')
 
-    print(r'    \begin{minipage}[t]{0.33\textwidth}')
+    print(r'    \begin{minipage}[t]{0.5\textwidth}')
     print(r'        \centering')
-    print(r'        \includegraphics[width=0.9\textwidth]{{{0}}}'.format(urls[i][1]))
+    print(r'        \includegraphics[width=0.9\textwidth]{{{0}}}'.format(urls[i].filename))
     print()
-    print(r'        {0} \\ {1}'.format(urls[i][2], urls[i][3]))
+    print(r'        {0} \\ {1}'.format(urls[i].issuer, urls[i].username))
     print(r'')
     print(r'        \vspace{\baselineskip}')
     print(r'        \texttt{{\url{{{0}}}}}'.format(safeurl))
