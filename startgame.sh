@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|lol|ds2|me1|ark>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|lol|ds2|me1|ark|bl>"
 	exit 2
 fi
 
@@ -50,4 +50,11 @@ elif [ $1 = "ark" ]; then
 	/media/Data2/Games/SteamLibrary/steamapps/common/ARK/ShooterGame/Binaries/Linux/ShooterGame
 	xrandr --output DVI-I-1 --primary
 	set -e
+elif [ $1 = "bl" ]; then
+	export WINEPREFIX=${HOME}/.wine-wow
+	wine reg ADD HKCU\\Software\\Wine\\DllOverrides /t REG_SZ /f /v "ucrtbase" /d "native,builtin"
+	wine reg ADD HKCU\\Software\\Wine\\DllOverrides /t REG_SZ /f /v "api-ms-win-crt-private-l1-1-0" /d "native,builtin"
+	# Command for OW
+	# xmodmap -e "keycode 37 = Control_R"
+	exec wine ${HOME}/Games/Battle.net/Battle.net.exe
 fi
