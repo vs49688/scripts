@@ -30,20 +30,25 @@ elif [ "$(hostname)" = "MORNINGSTAR" ]; then
 
 	if [ "$(prime-select query)" = "nvidia" ]; then
 		MAIN_DISPLAY="eDP-1-1"
+		EXT_DISPLAY="HDMI-1-1"
 	else
 		MAIN_DISPLAY="eDP-1"
+		EXT_DISPLAY="HDMI-1"
 	fi
 
 	# xrandr --output ${MAIN_DISPLAY} --primary --mode 3840x2160
-	# if [ ! -z "$(xrandr | grep 'HDMI-1 connected')" ]; then
-	# 	xrandr --output HDMI-1 --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of ${MAIN_DISPLAY}
+	# if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
+	# 	xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of ${MAIN_DISPLAY}
 	# fi
 
 	# Drop to 1080p so the system's actually usable.
 	xrandr --output ${MAIN_DISPLAY} --primary --mode 1920x1080
-	if [ ! -z "$(xrandr | grep 'HDMI-1 connected')" ]; then
-		xrandr --output HDMI-1 --mode 1920x1080 --right-of ${MAIN_DISPLAY}
+	if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
+		xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --right-of ${MAIN_DISPLAY} --scale 1x1
 	fi
+
+	unset MAIN_DISPLAY
+	unset EXT_DISPLAY
 
 	TOUCHPAD_ID=$(xinput list --id-only 'DLL06E4:01 06CB:7A13 Touchpad')
 	if [ ! -z ${TOUCHPAD_ID} ]; then
