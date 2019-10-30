@@ -36,16 +36,16 @@ elif [ "$(hostname)" = "MORNINGSTAR" ]; then
 		EXT_DISPLAY="HDMI-1"
 	fi
 
-	# xrandr --output ${MAIN_DISPLAY} --primary --mode 3840x2160
-	# if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
-	# 	xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of ${MAIN_DISPLAY}
-	# fi
+	xrandr --output ${MAIN_DISPLAY} --primary --mode 3840x2160
+	if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
+		xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of ${MAIN_DISPLAY}
+	fi
 
 	# Drop to 1080p so the system's actually usable.
-	xrandr --output ${MAIN_DISPLAY} --primary --mode 1920x1080
-	if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
-		xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --right-of ${MAIN_DISPLAY} --scale 1x1
-	fi
+	#xrandr --output ${MAIN_DISPLAY} --primary --mode 1920x1080
+	#if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
+	#	xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --right-of ${MAIN_DISPLAY} --scale 1x1
+	#fi
 
 	unset MAIN_DISPLAY
 	unset EXT_DISPLAY
@@ -72,6 +72,9 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE" ]; then
 		export QT_SCALE_FACTOR=1
 		dconf write /org/mate/desktop/interface/window-scaling-factor 1
 	fi
+
+	dconf write /org/gnome/desktop/wm/preferences/mouse-button-modifier "'<Control><Alt><Space>'"
+	dconf write /org/mate/marco/general/mouse-button-modifier "'<Control><Alt><Space>'"
 elif [ "${XDG_CURRENT_DESKTOP}" = "i3" ]; then
 	if [ "${RESOLUTION}" = "3840x2160" ]; then
 		export GDK_SCALE=2
