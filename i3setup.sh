@@ -73,8 +73,15 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE" ]; then
 		dconf write /org/mate/desktop/interface/window-scaling-factor 1
 	fi
 
+	# Remap Alt-to-move
 	dconf write /org/gnome/desktop/wm/preferences/mouse-button-modifier "'<Control><Alt><Space>'"
 	dconf write /org/mate/marco/general/mouse-button-modifier "'<Control><Alt><Space>'"
+
+	# Kill automount
+	gsettings set org.gnome.desktop.media-handling automount-open false
+	gsettings set org.gnome.desktop.media-handling automount false
+	dconf write /org/mate/desktop/media-handling/automount-open false
+	dconf write /org/mate/desktop/media-handling/automount false
 elif [ "${XDG_CURRENT_DESKTOP}" = "i3" ]; then
 	if [ "${RESOLUTION}" = "3840x2160" ]; then
 		export GDK_SCALE=2
