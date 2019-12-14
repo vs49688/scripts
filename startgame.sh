@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|lol|ds2|me1|ark|bl>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|lol|ds2|me1|ark|bl|ac1|nier>"
 	exit 2
 fi
 
@@ -57,4 +57,18 @@ elif [ $1 = "bl" ]; then
 	# Command for OW
 	# xmodmap -e "keycode 37 = Control_R"
 	exec wine ${HOME}/Games/Battle.net/Battle.net.exe
+elif [ $1 = "ac1" ]; then
+	export WINEPREFIX=/media/Data2/Games/AssassinsCreed/wine
+	cd /media/Data2/Games/AssassinsCreed
+	exec wine /media/Data2/Games/AssassinsCreed/AssassinsCreed_Dx10.exe
+elif [ $1 = "crysis" ]; then
+	export WINEPREFIX=/media/Data2/Games/Crysis/wine
+	cd /media/Data2/Games/Crysis/Bin64
+	exec wine /media/Data2/Games/Crysis/Bin64/Crysis.exe
+elif [ $1 = "nier" ]; then
+	export LANG=en_AU.UTF-8
+	export LANGUAGE=en_AU:en_GB:en
+	export WINEPREFIX=/media/Data2/Games/NierAutomata/wine
+	cd /media/Data2/Games/NierAutomata
+	exec wine /media/Data2/Games/NierAutomata/NieRAutomata.exe
 fi
