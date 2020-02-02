@@ -17,6 +17,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `startgame.sh`              | Game launching script to make Steam streaming easier. |
 | `totpcvt.py`                | Convert an andOTP JSON Backup to a LaTex file for offline backup. |
 | `asfcut.py`                 | Cut an Argonaut ASF file down to size. |
+| `vagcut.py`                 | Cut an Simon & Schuster VAG file down to size. |
 
 ## License
 
