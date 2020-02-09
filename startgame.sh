@@ -5,11 +5,11 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|lol|ds2|me1|ark|bl|ac1|nier>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|lol|ds2|me1|bl|ac1|nier>"
 	exit 2
 fi
 
-#xmessage -print -buttons trl,trldebug,tra,tru,tr2013,eso,lol,ds2,me1,ark "Select a game"
+#xmessage -print -buttons trl,trldebug,tra,tru,tr2013,eso,lol,ds2,me1 "Select a game"
 
 if [ $1 = "trl" ]; then
 	export WINEPREFIX=${HOME}/.wine-trl
@@ -43,13 +43,6 @@ elif [ $1 = "ds2" ]; then
 elif [ $1 = "me1" ]; then
 	export WINEPREFIX=/media/Data2/wine/masseffect
 	exec wine /media/Data2/wine/masseffect/drive_c/Games/Mass\ Effect/Binaries/MassEffect.exe
-elif [ $1 = "ark" ]; then
-	xrandr --output DP-0 --primary
-	set +e
-	trap 'xrandr --output DVI-I-1 --primary' TERM INT ABRT
-	/media/Data2/Games/SteamLibrary/steamapps/common/ARK/ShooterGame/Binaries/Linux/ShooterGame
-	xrandr --output DVI-I-1 --primary
-	set -e
 elif [ $1 = "bl" ]; then
 	export WINEPREFIX=${HOME}/.wine-wow
 	wine reg ADD HKCU\\Software\\Wine\\DllOverrides /t REG_SZ /f /v "ucrtbase" /d "native,builtin"
@@ -61,14 +54,16 @@ elif [ $1 = "ac1" ]; then
 	export WINEPREFIX=/media/Data2/Games/AssassinsCreed/wine
 	cd /media/Data2/Games/AssassinsCreed
 	exec wine /media/Data2/Games/AssassinsCreed/AssassinsCreed_Dx10.exe
-elif [ $1 = "crysis" ]; then
-	export WINEPREFIX=/media/Data2/Games/Crysis/wine
-	cd /media/Data2/Games/Crysis/Bin64
-	exec wine /media/Data2/Games/Crysis/Bin64/Crysis.exe
 elif [ $1 = "nier" ]; then
 	export LANG=en_AU.UTF-8
 	export LANGUAGE=en_AU:en_GB:en
-	export WINEPREFIX=/media/Data2/Games/NierAutomata/wine
-	cd /media/Data2/Games/NierAutomata
-	exec wine /media/Data2/Games/NierAutomata/NieRAutomata.exe
+	export WINEPREFIX=/media/Data/NierAutomata/wine
+	cd /media/Data/NierAutomata
+	exec wine /media/Data/NierAutomata/NieRAutomata.exe
+elif [ $1 = "soaser" ]; then
+	export LANG=en_AU.UTF-8
+	export LANGUAGE=en_AU:en_GB:en
+	export WINEPREFIX=/media/Data2/Games/SoaSE
+	cd /media/Data2/Games/SoaSE
+	exec wine '/media/Data2/Games/SoaSE/Sins of a Solar Empire Rebellion.exe'
 fi
