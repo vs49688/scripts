@@ -19,6 +19,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `asfcut.py`                 | Cut an Argonaut ASF file down to size. |
 | `vagcut.py`                 | Cut an Simon & Schuster VAG file down to size. |
 | `flalac.sh`                 | Convery a bunch of FLACs to ALAC (m4a). |
+| `alpcut.py`                 | Cut a LEGO Racers ALP file down to size. |
 
 ## License
 
