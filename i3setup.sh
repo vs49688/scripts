@@ -18,8 +18,8 @@
 if [ "$(hostname)" = "CAPRICA" ]; then
 	xrandr \
 		--output DP-0 --mode 1920x1080 \
-		--output DVI-I-1 --primary --mode 1920x1080 --right-of DP-0 \
-		--output HDMI-0 --mode 1920x1080 --right-of DVI-I-1
+		--output HDMI-0 --primary --mode 1920x1080 --right-of DP-0 \
+		--output DP-3 --mode 1920x1080 --right-of HDMI-0
 elif [ "$(hostname)" = "DEMOGORGON" ]; then
 	# Fix the workstation's monitors
 	xrandr \
