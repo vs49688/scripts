@@ -16,10 +16,10 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `gh-relpub.py`              | Lightweight script to create a GitHub release and upload assets. |
 | `startgame.sh`              | Game launching script to make Steam streaming easier. |
 | `totpcvt.py`                | Convert an andOTP JSON Backup to a LaTex file for offline backup. |
-| `asfcut.py`                 | Cut an Argonaut ASF file down to size. |
-| `vagcut.py`                 | Cut an Simon & Schuster VAG file down to size. |
 | `flalac.sh`                 | Convery a bunch of FLACs to ALAC (m4a). |
-| `alpcut.py`                 | Cut a LEGO Racers ALP file down to size. |
+| `ffmpeg/asfcut.py`          | Cut an Argonaut ASF file down to size. |
+| `ffmpeg/vagcut.py`          | Cut an Simon & Schuster VAG file down to size. |
+| `ffmpeg/alpcut.py`          | Cut a LEGO Racers ALP file down to size. |
 
 ## License
 
