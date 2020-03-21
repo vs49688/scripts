@@ -20,6 +20,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `ffmpeg/asfcut.py`          | Cut an Argonaut ASF file down to size. |
 | `ffmpeg/vagcut.py`          | Cut an Simon & Schuster VAG file down to size. |
 | `ffmpeg/alpcut.py`          | Cut a LEGO Racers ALP file down to size. |
+| `ffmpeg/pputil.py`          | Pro Pinball Soundbank Utility. |
 
 ## License
 
