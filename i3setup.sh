@@ -36,16 +36,16 @@ elif [ "$(hostname)" = "MORNINGSTAR" ]; then
 		EXT_DISPLAY="HDMI-1"
 	fi
 
-	xrandr --output ${MAIN_DISPLAY} --primary --mode 3840x2160
-	if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
-		xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of ${MAIN_DISPLAY}
-	fi
+	#xrandr --output ${MAIN_DISPLAY} --primary --mode 3840x2160
+	#if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
+	#	xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --scale-from 3840x2160 --panning 3840x2160+3840+0 --right-of ${MAIN_DISPLAY}
+	#fi
 
 	# Drop to 1080p so the system's actually usable.
-	#xrandr --output ${MAIN_DISPLAY} --primary --mode 1920x1080
-	#if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
-	#	xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --right-of ${MAIN_DISPLAY} --scale 1x1
-	#fi
+	xrandr --output ${MAIN_DISPLAY} --primary --mode 1920x1080
+	if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
+		xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --right-of ${MAIN_DISPLAY} --scale 1x1
+	fi
 
 	unset MAIN_DISPLAY
 	unset EXT_DISPLAY
