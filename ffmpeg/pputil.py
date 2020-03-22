@@ -158,7 +158,6 @@ def main():
 	fatecutparse.add_argument('filename', help='soundbank (*.{5,11,22,44}[cC])')
 
 	args = parser.parse_args(sys.argv[1:])
-	print(args)
 	if args.operation == 'dumphdr':
 		return dumphdr(args.filename)
 	elif args.operation == 'split':
