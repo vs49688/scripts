@@ -68,9 +68,13 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE" ]; then
 	if [ "${RESOLUTION}" = "3840x2160" ]; then
 		export QT_SCALE_FACTOR=2
 		dconf write /org/mate/desktop/interface/window-scaling-factor 2
+		gsettings set org.gnome.desktop.interface scaling-factor 2
+		gsettings set org.mate.interface window-scaling-factor 2
 	else
 		export QT_SCALE_FACTOR=1
 		dconf write /org/mate/desktop/interface/window-scaling-factor 1
+		gsettings set org.gnome.desktop.interface scaling-factor 1
+		gsettings set org.mate.interface window-scaling-factor 1
 	fi
 
 	# Remap Alt-to-move
@@ -82,6 +86,11 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE" ]; then
 	gsettings set org.gnome.desktop.media-handling automount false
 	dconf write /org/mate/desktop/media-handling/automount-open false
 	dconf write /org/mate/desktop/media-handling/automount false
+
+	gsettings set org.mate.interface gtk-theme     'Arc-Dark'
+	gsettings set org.mate.interface gtk-key-theme 'Default'
+	gsettings set org.mate.interface icon-theme    'ePapirus'
+
 elif [ "${XDG_CURRENT_DESKTOP}" = "i3" ]; then
 	if [ "${RESOLUTION}" = "3840x2160" ]; then
 		export GDK_SCALE=2
