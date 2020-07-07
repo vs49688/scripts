@@ -5,9 +5,12 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|bl|ac1|nier>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|bl|ac1|nier|soaser|gw2>"
 	exit 2
 fi
+
+export LANG=en_AU.UTF-8
+export LANGUAGE=en_AU:en_GB:en
 
 if [ $1 = "trl" ]; then
 	export WINEPREFIX=${HOME}/.wine-trl
@@ -47,15 +50,15 @@ elif [ $1 = "ac1" ]; then
 	cd ${HOME}/Games/AssassinsCreed
 	exec wine ${HOME}/Games/AssassinsCreed/AssassinsCreed_Dx10.exe
 elif [ $1 = "nier" ]; then
-	export LANG=en_AU.UTF-8
-	export LANGUAGE=en_AU:en_GB:en
 	export WINEPREFIX=${HOME}/Games/NierAutomata/wine
 	cd ${HOME}/Games/NierAutomata
 	exec wine ${HOME}/Games/NierAutomata/NieRAutomata.exe
 elif [ $1 = "soaser" ]; then
-	export LANG=en_AU.UTF-8
-	export LANGUAGE=en_AU:en_GB:en
 	export WINEPREFIX=${HOME}/Games/SoaSE
 	cd ${HOME}/Games/SoaSE
 	exec wine "${HOME}/Games/SoaSE/Sins of a Solar Empire Rebellion.exe"
+elif [ $1 = "gw2" ]; then
+	export WINEPREFIX=${HOME}/Games/GuildWars2/wine
+	cd ${HOME}/Games/GuildWars2/
+	exec wine ${HOME}/Games/GuildWars2/Guild\ Wars\ 2/Gw2-64.exe
 fi
