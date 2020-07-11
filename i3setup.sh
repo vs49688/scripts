@@ -60,54 +60,50 @@ fi
 
 RESOLUTION=$(xrandr -q | sed -nr 's/^.+primary\s+([0-9]+x[0-9]+).+$/\1/p')
 
-if [ "${XDG_CURRENT_DESKTOP}" = "MATE" ]; then
+if [ "${XDG_CURRENT_DESKTOP}" = "MATE"  -o "${XDG_CURRENT_DESKTOP}" = "mate" ]; then
 	unset GDK_SCALE
 	xrandr --dpi 96
-	gsettings set org.gnome.desktop.interface scaling-factor 1
 
 	if [ "${RESOLUTION}" = "3840x2160" ]; then
 		export QT_SCALE_FACTOR=2
 		dconf write /org/mate/desktop/interface/window-scaling-factor 2
-		gsettings set org.gnome.desktop.interface scaling-factor 2
-		gsettings set org.mate.interface window-scaling-factor 2
+		dconf write /org/gnome/desktop/interface/scaling-factor 2
 	else
 		export QT_SCALE_FACTOR=1
 		dconf write /org/mate/desktop/interface/window-scaling-factor 1
-		gsettings set org.gnome.desktop.interface scaling-factor 1
-		gsettings set org.mate.interface window-scaling-factor 1
+		dconf write /org/gnome/desktop/interface/scaling-factor 1
 	fi
 
 	# Remap Alt-to-move
 	dconf write /org/gnome/desktop/wm/preferences/mouse-button-modifier "'<Control><Alt><Space>'"
 	dconf write /org/mate/marco/general/mouse-button-modifier "'<Control><Alt><Space>'"
+	dconf write /org/mate/settings-daemon/plugins/media-keys/home "'<Mod4>e'"
+	dconf write /org/mate/marco/global-keybindings/run-command-terminal "'<Primary><Alt>t'"
+
 
 	# Kill automount
-	gsettings set org.gnome.desktop.media-handling automount-open false
-	gsettings set org.gnome.desktop.media-handling automount false
 	dconf write /org/mate/desktop/media-handling/automount-open false
 	dconf write /org/mate/desktop/media-handling/automount false
 
-	gsettings set org.mate.interface gtk-theme     'Arc-Dark'
-	gsettings set org.mate.interface gtk-key-theme 'Default'
-	gsettings set org.mate.interface icon-theme    'ePapirus'
+	dconf write /org/mate/marco/general/theme                    "'Arc-Dark'"
+	dconf write /org/mate/desktop/interface/gtk-theme            "'Arc-Dark'"
+	dconf write /org/mate/desktop/interface/icon-theme           "'Papirus-Dark'"
+	dconf write /org/mate/desktop/peripherals/mouse/cursor-theme "'mate-black'"
 
 elif [ "${XDG_CURRENT_DESKTOP}" = "i3" ]; then
 	if [ "${RESOLUTION}" = "3840x2160" ]; then
 		export GDK_SCALE=2
 		export QT_SCALE_FACTOR=2
 		xrandr --dpi 235
-		gsettings set org.gnome.desktop.interface scaling-factor 2
 		dconf write /org/mate/desktop/interface/window-scaling-factor 2
+		dconf write /org/gnome/desktop/interface/scaling-factor 2
 	else
 		unset GDK_SCALE
 		unset QT_SCALE_FACTOR
 		xrandr --dpi 96
-		gsettings set org.gnome.desktop.interface scaling-factor 0
-		dconf write /org/mate/desktop/interface/window-scaling-factor 0
+		dconf write /org/mate/desktop/interface/window-scaling-factor 1
+		dconf write /org/gnome/desktop/interface/scaling-factor 1
 	fi
 fi
 
 unset RESOLUTION
-
-export GTK_THEME=Arc-Dark
-
