@@ -85,6 +85,9 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE"  -o "${XDG_CURRENT_DESKTOP}" = "mate" ]; 
 	dconf write /org/mate/desktop/media-handling/automount-open false
 	dconf write /org/mate/desktop/media-handling/automount false
 
+	# Disable software compositing, picom's handling it
+	dconf write /org/mate/marco/general/compositing-manager false
+
 	dconf write /org/mate/marco/general/theme                    "'Arc-Dark'"
 	dconf write /org/mate/desktop/interface/gtk-theme            "'Arc-Dark'"
 	dconf write /org/mate/desktop/interface/icon-theme           "'Papirus-Dark'"
