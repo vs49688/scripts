@@ -85,13 +85,20 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE"  -o "${XDG_CURRENT_DESKTOP}" = "mate" ]; 
 	dconf write /org/mate/desktop/media-handling/automount-open false
 	dconf write /org/mate/desktop/media-handling/automount false
 
-	# Disable software compositing, picom's handling it
-	dconf write /org/mate/marco/general/compositing-manager false
-
+    # Fix themes
 	dconf write /org/mate/marco/general/theme                    "'Arc-Dark'"
 	dconf write /org/mate/desktop/interface/gtk-theme            "'Arc-Dark'"
 	dconf write /org/mate/desktop/interface/icon-theme           "'Papirus-Dark'"
 	dconf write /org/mate/desktop/peripherals/mouse/cursor-theme "'mate-black'"
+
+	# Disable software compositing, picom's handling it
+	dconf write /org/mate/marco/general/compositing-manager false
+
+	# Fix touchpad on the laptops
+	if [ "$(hostname)" = "MORNINGSTAR" -o "$(hostname)" = "BAST" ]; then
+		dconf write /org/mate/desktop/peripherals/touchpad/horizontal-two-finger-scrolling true
+		dconf write /org/mate/desktop/peripherals/touchpad/natural-scroll true
+	fi
 
 elif [ "${XDG_CURRENT_DESKTOP}" = "i3" ]; then
 	if [ "${RESOLUTION}" = "3840x2160" ]; then
