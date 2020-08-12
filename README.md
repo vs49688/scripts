@@ -22,6 +22,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `ffmpeg/vagcut.py`          | Cut an Simon & Schuster VAG file down to size. |
 | `ffmpeg/alpcut.py`          | Cut a LEGO Racers ALP file down to size. |
 | `ffmpeg/pputil.py`          | Pro Pinball Soundbank Utility. |
+| `voixdb.py`                 | Puts Skvalex and ACR calls into a consistent directory format. |
 
 ## License
 
