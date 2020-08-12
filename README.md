@@ -23,6 +23,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `ffmpeg/alpcut.py`          | Cut a LEGO Racers ALP file down to size. |
 | `ffmpeg/pputil.py`          | Pro Pinball Soundbank Utility. |
 | `voixdb.py`                 | Puts Skvalex and ACR calls into a consistent directory format. |
+| `smsdb.py`                  | Store SMSBackup+'d emails into a SQLite3 database. |
 
 ## License
 
