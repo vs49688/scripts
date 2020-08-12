@@ -18,6 +18,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `totpcvt.py`                | Convert an andOTP JSON Backup to a LaTex file for offline backup. |
 | `flalac.sh`                 | Convery a bunch of FLACs to ALAC (m4a). |
 | `ffmpeg/asfcut.py`          | Cut an Argonaut ASF file down to size. |
+| `ffmpeg/asfdump.py`         | Dump info about Argonaut ASF file to JSON. |
 | `ffmpeg/vagcut.py`          | Cut an Simon & Schuster VAG file down to size. |
 | `ffmpeg/alpcut.py`          | Cut a LEGO Racers ALP file down to size. |
 | `ffmpeg/pputil.py`          | Pro Pinball Soundbank Utility. |
