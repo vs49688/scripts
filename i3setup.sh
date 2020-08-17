@@ -91,6 +91,10 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE"  -o "${XDG_CURRENT_DESKTOP}" = "mate" ]; 
 	dconf write /org/mate/desktop/interface/icon-theme           "'Papirus-Dark'"
 	dconf write /org/mate/desktop/peripherals/mouse/cursor-theme "'mate-black'"
 
+	# Configure Keyboard Layouts
+	dconf write /org/mate/desktop/peripherals/keyboard/kbd/layouts "['us', 'ru']"
+	dconf write /org/mate/desktop/peripherals/keyboard/kbd/options "['grp\tgrp:alt_caps_toggle', 'terminate\tterminate:ctrl_alt_bksp']"
+
 	# Disable software compositing, picom's handling it
 	dconf write /org/mate/marco/general/compositing-manager false
 
