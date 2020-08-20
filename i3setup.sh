@@ -54,6 +54,7 @@ elif [ "$(hostname)" = "MORNINGSTAR" ]; then
 	if [ ! -z ${TOUCHPAD_ID} ]; then
 		xinput set-prop ${TOUCHPAD_ID} 'libinput Natural Scrolling Enabled' 1
 		xinput set-prop ${TOUCHPAD_ID} 'libinput Horizontal Scroll Enabled' 1
+		xinput set-prop ${TOUCHPAD_ID} 'libinput Tapping Enabled'           1
 	fi
 	unset TOUCHPAD_ID
 fi
@@ -102,6 +103,7 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE"  -o "${XDG_CURRENT_DESKTOP}" = "mate" ]; 
 	if [ "$(hostname)" = "MORNINGSTAR" -o "$(hostname)" = "BAST" ]; then
 		dconf write /org/mate/desktop/peripherals/touchpad/horizontal-two-finger-scrolling true
 		dconf write /org/mate/desktop/peripherals/touchpad/natural-scroll true
+		dconf write /org/mate/desktop/peripherals/touchpad/tap-to-click true
 	fi
 
 elif [ "${XDG_CURRENT_DESKTOP}" = "i3" ]; then
