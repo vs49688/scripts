@@ -44,7 +44,7 @@ elif [ "$(hostname)" = "MORNINGSTAR" ]; then
 	# Drop to 1080p so the system's actually usable.
 	xrandr --output ${MAIN_DISPLAY} --primary --mode 1920x1080
 	if [ ! -z "$(xrandr | grep "${EXT_DISPLAY} connected")" ]; then
-		xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --right-of ${MAIN_DISPLAY} --scale 1x1
+		xrandr --output ${EXT_DISPLAY} --mode 1920x1080 --right-of ${MAIN_DISPLAY} --scale 1x1 --panning 0x0
 	fi
 
 	unset MAIN_DISPLAY
