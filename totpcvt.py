@@ -23,7 +23,7 @@ import subprocess
 
 entry = namedtuple('entry', ['url', 'filename', 'issuer', 'label', 'username'])
 
-REGEX_LABEL = re.compile(r'^(.+) - ((.+):(.+))$')
+REGEX_LABEL = re.compile(r'^(.+):(.+)$')
 
 if len(sys.argv) != 3:
     print('Usage: {0} <name> <email>'.format(sys.argv[0]), file=sys.stderr)
@@ -36,12 +36,22 @@ data = json.loads(sys.stdin.read())
 
 urls = []
 
+# Quickly check this before doing anything
+for e in data:
+    if 'issuer' in e:
+        continue
+
+    print('issuer not found in backup, please upgrade your andOTP and re-export', file=sys.stderr)
+    exit(1)
+
 i = 0
 for e in data:
     query = {
         'algorithm': e['algorithm'],
-        'digits': int(e['digits']),
-        'secret': e['secret']
+        'digits':    int(e['digits']),
+        'secret':    e['secret'],
+        'label':     e['label'],
+        'issuer':    e['issuer']
     }
 
     # These won't actually import correctly, but the user
@@ -49,18 +59,14 @@ for e in data:
     if e['type'] != 'STEAM':
         query['period'] = int(e['period'])
 
-    # andOTP puts a "-" in between the label and issuer
     m = re.match(REGEX_LABEL, e['label'])
     if not m:
-        raise Exception('invalid label')
-
-    issuer, label = m[1], m[2]
-    query['issuer'] = issuer
+        raise Exception(f'invalid label {e["label"]}')
 
     parts = [
         'otpauth',
         e['type'].lower(),
-        urllib.parse.quote(label),
+        urllib.parse.quote(e['label']),
         '',
         urllib.parse.urlencode(query),
         ''
@@ -69,9 +75,9 @@ for e in data:
     e = entry(
         url=urllib.parse.urlunparse(parts),
         filename='qr_{0:0>2}.png'.format(i),
-        issuer=issuer,
-        label=label,
-        username=m[4]
+        issuer=e['issuer'],
+        label=e['label'],
+        username=m[2]
     )
     subprocess.run(['qrencode', '-t', 'PNG', '-v', '10', '-o', e.filename, '--', e.url], check=True)
     urls.append(e)
@@ -95,7 +101,7 @@ print(r"""\documentclass[oneside]{article}
 
 \fancyhf[HL]{\DTMnow}""")
 
-print(r'\fancyhf[HC]{{Backup TOTP Codes -- {0} -- {1}}}'.format(name, email))
+print(rf'\fancyhf[HC]{{Backup TOTP Codes -- {name} -- {email}}}')
 
 
 print(r"""
