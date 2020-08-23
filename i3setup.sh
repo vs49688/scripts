@@ -96,14 +96,15 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE"  -o "${XDG_CURRENT_DESKTOP}" = "mate" ]; 
 	dconf write /org/mate/desktop/peripherals/keyboard/kbd/layouts "['us', 'ru']"
 	dconf write /org/mate/desktop/peripherals/keyboard/kbd/options "['grp\tgrp:alt_caps_toggle', 'terminate\tterminate:ctrl_alt_bksp']"
 
-	# Disable software compositing, picom's handling it
-	dconf write /org/mate/marco/general/compositing-manager false
-
 	# Fix touchpad on the laptops
 	if [ "$(hostname)" = "MORNINGSTAR" -o "$(hostname)" = "BAST" ]; then
 		dconf write /org/mate/desktop/peripherals/touchpad/horizontal-two-finger-scrolling true
 		dconf write /org/mate/desktop/peripherals/touchpad/natural-scroll true
 		dconf write /org/mate/desktop/peripherals/touchpad/tap-to-click true
+		dconf write /org/mate/marco/general/compositing-manager true
+    elif [ "$(hostname)" = "CAPRICA" -o "$(hostname)" = "DEMOGORGON" ]; then
+		# On Nvidia cards, picom's handling this
+		dconf write /org/mate/marco/general/compositing-manager false
 	fi
 
 elif [ "${XDG_CURRENT_DESKTOP}" = "i3" ]; then
