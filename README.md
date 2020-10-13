@@ -25,6 +25,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `ffmpeg/pputil.py`          | Pro Pinball Soundbank Utility. |
 | `voixdb.py`                 | Puts Skvalex and ACR calls into a consistent directory format. |
 | `smsdb.py`                  | Store SMSBackup+'d emails into a SQLite3 database. |
+| `gitea-tx.py`               | Transfer Gitea repos to a singal org. |
 
 ## License
 
