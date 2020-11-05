@@ -69,6 +69,8 @@ if [ "${XDG_CURRENT_DESKTOP}" = "MATE"  -o "${XDG_CURRENT_DESKTOP}" = "mate" ]; 
 		export QT_SCALE_FACTOR=2
 		dconf write /org/mate/desktop/interface/window-scaling-factor 2
 		dconf write /org/gnome/desktop/interface/scaling-factor 2
+		# Needs this to be explicitly set otherwise it's wayyy too big
+		dconf write /org/mate/desktop/font-rendering/dpi 96
 	else
 		export QT_SCALE_FACTOR=1
 		dconf write /org/mate/desktop/interface/window-scaling-factor 1
