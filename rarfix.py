@@ -58,7 +58,7 @@ def _find_subs(subdir):
                 print(f'WARNING: non-matching subtitle file {root}/{s}')
                 continue
 
-            num = m[1]
+            num = int(m[1])
             lang = m[2].lower()
             path = os.path.join(root, s)
 
