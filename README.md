@@ -25,7 +25,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `ffmpeg/pputil.py`          | Pro Pinball Soundbank Utility. |
 | `voixdb.py`                 | Puts Skvalex and ACR calls into a consistent directory format. |
 | `smsdb.py`                  | Store SMSBackup+'d emails into a SQLite3 database. |
-| `gitea-tx.py`               | Transfer Gitea repos to a singal org. |
+| `gitea-tx.py`               | Transfer Gitea repos to a single org. |
 | `rarfix.py`                 | Merge MP4 + Subs/*.srt to mkv. |
 | `remove_non_english.py`     | Remove non-English streams. Ancient code, don't use. |
 | `mcmirror.py`               | Old-style Minecraft mirroring script. Ancient code, don't use. |
