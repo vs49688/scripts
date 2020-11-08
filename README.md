@@ -28,6 +28,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `gitea-tx.py`               | Transfer Gitea repos to a singal org. |
 | `rarfix.py`                 | Merge MP4 + Subs/*.srt to mkv. |
 | `remove_non_english.py`     | Remove non-English streams. Ancient code, don't use. |
+| `mcmirror.py`               | Old-style Minecraft mirroring script. Ancient code, don't use. |
 
 ## License
 
