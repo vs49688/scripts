@@ -8,6 +8,35 @@ import collections
 import json
 
 SUBFILE_REGEX = re.compile(r'^(\d+)_(\w+)\.[sS][rR][tT]$')
+LANGS = {
+    'english': 'eng',
+    'french': 'fre',
+    'bulgarian': 'bul',
+    'chinese': 'chi',
+    'arabic': 'ara',
+    'czech': 'cze',
+    'danish': 'dan',
+    'dutch': 'dut',
+    'finnish': 'fin',
+    'greek': 'gre',
+    'spanish': 'spa',
+    'hungarian': 'hun',
+    'swedish': 'swe',
+    'slovenian': 'slv',
+    'polish': 'pol',
+    'vietnamese': 'vie',
+    'romanian': 'rum',
+    'bokmal': 'nob',
+    'portuguese': 'por',
+    'korean': 'kor',
+    'german': 'ger',
+    'russian': 'rus',
+    'italian': 'ita',
+    'turkish': 'tur',
+    'estonian': 'est',
+    'indonesian': 'ind',
+    'hebrew': 'heb'
+}
 DESTDIR = "/media/Collection1/Movies"
 
 subinfo = collections.namedtuple('subinfo', ['num', 'langcode', 'file'])
@@ -29,14 +58,16 @@ def _find_subs(subdir):
                 print(f'WARNING: non-matching subtitle file {root}/{s}')
                 continue
 
-            num  = m[1]
-            lang = m[2]
+            num = m[1]
+            lang = m[2].lower()
             path = os.path.join(root, s)
 
-            if lang == 'English':
-                langcode = 'eng'
+            if len(lang) != 3:
+                langcode = LANGS.get(lang, 'und')
             else:
-                langcode = 'unk'
+                langcode = lang
+
+            if langcode == 'und' and lang != 'und':
                 print(f'WARNING: unknown language {lang}, marking as unknown')
 
             subs.append(subinfo(num=num, langcode=langcode, file=path))
@@ -64,6 +95,10 @@ if nsub != 0:
     exit(1)
 
 subs = _find_subs(subdir)
+
+# for s in subs:
+#     print(s)
+# exit(0)
 
 outdir = os.path.join(DESTDIR, mbase)
 os.makedirs(outdir, 0o755, exist_ok=True)
