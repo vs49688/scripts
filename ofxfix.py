@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import os.path
 import argparse
 import hashlib
 import decimal
@@ -61,8 +62,15 @@ def fix_ofx_balace(ofx):
 def main():
 	parser = argparse.ArgumentParser(description='OFXFix')
 	parser.add_argument('infile', metavar='infile.ofx', type=str, help='Input file')
+	parser.add_argument('outfile', metavar='outfile.ofx', type=str, nargs='?')
 
 	args = parser.parse_args(sys.argv[1:])
+
+
+	if not args.outfile:
+		filename = os.path.basename(args.infile)
+		base, ext = os.path.splitext(filename)
+		args.outfile = '{0}.fixed{1}'.format(base, ext)
 
 	with open(args.infile, 'r') as f:
 		ofxdom = parse(f)
@@ -71,7 +79,13 @@ def main():
 	fix_ofx_fitid(ofxdom, dups)
 	fix_ofx_balace(ofxdom)
 
-	print(ofxdom.toprettyxml(indent='  ', newl=''))
+	xmlstr = ofxdom.toprettyxml(indent='  ', newl='')
+
+	if args.outfile == '-':
+		print(xmlstr, file=sys.stdout, end='')
+	else:
+		with open(args.outfile, 'w') as f:
+			print(xmlstr, file=f, end='')
 	return 0
 	
 
