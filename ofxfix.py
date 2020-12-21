@@ -64,18 +64,14 @@ def main():
 
 	args = parser.parse_args(sys.argv[1:])
 
-	with open(args.infile, 'rU') as f:
+	with open(args.infile, 'r') as f:
 		ofxdom = parse(f)
 
 	dups = set()
 	fix_ofx_fitid(ofxdom, dups)
 	fix_ofx_balace(ofxdom)
 
-	# Jesus, this shit is disgusting
-	#print(ofxdom.toprettyxml(indent='\t', newl='\r'))
-
-	xmllint = subprocess.Popen(['xmllint', '--format', '-'], stdin=subprocess.PIPE)
-	xmllint.communicate(ofxdom.toxml('utf-8'))
+	print(ofxdom.toprettyxml(indent='  ', newl=''))
 	return 0
 	
 
