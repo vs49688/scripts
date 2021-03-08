@@ -6,6 +6,7 @@ import re
 import subprocess
 import collections
 import json
+from typing import List
 
 SUBFILE_REGEX = re.compile(r'^(\d+)_(\w+)\.[sS][rR][tT]$')
 LANGS = {
@@ -49,10 +50,18 @@ srcdir = sys.argv[1]
 
 subdir = os.path.join(srcdir, 'Subs')
 
-def _find_subs(subdir):
+
+def _find_subs(subdir: str, mbase: str) -> List[subinfo]:
     subs = []
     for root, dirs, files in os.walk(subdir):
         for s in files:
+            ##
+            # Handle dvdsub, just assume English.
+            ##
+            if s == f'{mbase}.idx':
+                subs.append(subinfo(num=0, langcode='eng', file=os.path.join(root, s)))
+                continue
+
             m = SUBFILE_REGEX.fullmatch(s)
             if not m:
                 print(f'WARNING: non-matching subtitle file {root}/{s}')
@@ -76,6 +85,7 @@ def _find_subs(subdir):
     subs.sort(key=lambda x: x.num)
     return subs
 
+
 mbase = os.path.basename(srcdir)
 mfile = os.path.join(srcdir, f'{mbase}.mp4')
 
@@ -94,7 +104,7 @@ if nsub != 0:
     print('File already has subtitles...')
     exit(1)
 
-subs = _find_subs(subdir)
+subs = _find_subs(subdir, mbase)
 
 # for s in subs:
 #     print(s)
@@ -127,6 +137,7 @@ if len(subs) > 0:
 ffargs += ['-c:a', 'copy']
 
 ffargs += metaargs
+ffargs += ['-max_interleave_delta', '0']
 ffargs.append(os.path.join(outdir, f'{mbase}.mkv'))
 
 #print(ffargs)
