@@ -109,7 +109,6 @@ def fate_cut(file, outdir, maxtracks, maxsize):
 
 		hdr = info._replace(
 			track_count = min(info.track_count, maxtracks),
-			flags = 1,
 			tracks = tracks
 		)
 
