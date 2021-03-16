@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|bl|ac1|nier|soaser|gw2>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|gw2|bpm>"
 	exit 2
 fi
 
@@ -38,6 +38,10 @@ elif [ $1 = "eso" ]; then
 elif [ $1 = "ds2" ]; then
 	export WINEPREFIX=${HOME}/.wine-ds2
 	exec wine ${HOME}/Games/Dark\ Souls\ 2\ -\ Scholar\ of\ the\ First\ Sin/DarkSoulsII.exe
+elif [ $1 = "dsr" ]; then
+	export WINEPREFIX=${HOME}/Games/DarkSoulsRemastered/wine
+	cd ${HOME}/Games/DarkSoulsRemastered
+	exec wine ${HOME}/Games/DarkSoulsRemastered/DarkSoulsRemastered.exe
 elif [ $1 = "bl" ]; then
 	export WINEPREFIX=${HOME}/.wine-wow
 	wine reg ADD HKCU\\Software\\Wine\\DllOverrides /t REG_SZ /f /v "ucrtbase" /d "native,builtin"
@@ -61,4 +65,8 @@ elif [ $1 = "gw2" ]; then
 	export WINEPREFIX=${HOME}/Games/GuildWars2/wine
 	cd ${HOME}/Games/GuildWars2/
 	exec wine ${HOME}/Games/GuildWars2/Guild\ Wars\ 2/Gw2-64.exe
+elif [ $1 = "bpm" ]; then
+	export WINEPREFIX=${HOME}/Games/BPM/wine
+	cd ${HOME}/Games/BPM
+	exec wine ${HOME}/Games/BPM/WindowsNoEditor/BPMGame.exe
 fi
