@@ -57,6 +57,14 @@ elif [ "$(hostname)" = "MORNINGSTAR" ]; then
 		xinput set-prop ${TOUCHPAD_ID} 'libinput Tapping Enabled'           1
 	fi
 	unset TOUCHPAD_ID
+elif [ "$(hostname)" = "ANUBIS" ]; then
+	TOUCHPAD_ID=$(xinput list --id-only 'SynPS/2 Synaptics TouchPad')
+	if [ ! -z ${TOUCHPAD_ID} ]; then
+		xinput set-prop ${TOUCHPAD_ID} 'libinput Natural Scrolling Enabled' 1
+		xinput set-prop ${TOUCHPAD_ID} 'libinput Horizontal Scroll Enabled' 1
+		xinput set-prop ${TOUCHPAD_ID} 'libinput Tapping Enabled'           1
+	fi
+	unset TOUCHPAD_ID
 fi
 
 RESOLUTION=$(xrandr -q | sed -nr 's/^.+primary\s+([0-9]+x[0-9]+).+$/\1/p')
