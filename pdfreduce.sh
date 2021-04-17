@@ -17,4 +17,4 @@ else
 fi
 
 exec gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
-	$flag sOutputFile="$3" "$2"
+	$flag -sOutputFile="$3" "$2"
