@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|gw2|bpm>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm>"
 	exit 2
 fi
 
@@ -61,10 +61,6 @@ elif [ $1 = "soaser" ]; then
 	export WINEPREFIX=${HOME}/Games/SoaSE
 	cd ${HOME}/Games/SoaSE
 	exec wine "${HOME}/Games/SoaSE/Sins of a Solar Empire Rebellion.exe"
-elif [ $1 = "gw2" ]; then
-	export WINEPREFIX=${HOME}/Games/GuildWars2/wine
-	cd ${HOME}/Games/GuildWars2/
-	exec wine ${HOME}/Games/GuildWars2/Guild\ Wars\ 2/Gw2-64.exe
 elif [ $1 = "bpm" ]; then
 	export WINEPREFIX=${HOME}/Games/BPM/wine
 	cd ${HOME}/Games/BPM
