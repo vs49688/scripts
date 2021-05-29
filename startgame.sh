@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2>"
 	exit 2
 fi
 
@@ -66,3 +66,22 @@ elif [ $1 = "bpm" ]; then
 	cd ${HOME}/Games/BPM
 	exec wine ${HOME}/Games/BPM/WindowsNoEditor/BPMGame.exe
 fi
+#elif [ $1 = "hls" ]; then
+	#export WINEPREFIX=${HOME}/Games/HL/wine
+#fi
+
+#hls|hl2|hl2ep1|hl2ep2
+
+case $1 in hl*)
+	export WINEPREFIX=${HOME}/Games/HL/wine
+	cd ${HOME}/Games/HL
+
+	case $1 in
+		hls)    bat='Launch Half-Life Source.bat';;
+		hl2)    bat='Launch Half-Life 2.bat';;
+		hl2ep1) bat='Launch Half-Life 2 - Episode 1.bat';;
+		hl2ep2) bat='Launch Half-Life 2 - Episode 2.bat';;
+	esac
+
+	exec wine cmd /wait /c "${HOME}/Games/HL/${bat}"
+esac
