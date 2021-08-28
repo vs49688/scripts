@@ -13,23 +13,23 @@ export LANG=en_AU.UTF-8
 export LANGUAGE=en_AU:en_GB:en
 
 if [ $1 = "trl" ]; then
-	export WINEPREFIX=${HOME}/.wine-trl
+	export WINEPREFIX=${HOME}/Games/Tomb\ Raider\ Legend/wine
 	cd ${HOME}/Games/Tomb\ Raider\ Legend
 	exec wine trl.exe
 elif [ $1 = "trldebug" ]; then
-	export WINEPREFIX=${HOME}/.wine-trl
+	export WINEPREFIX=${HOME}/Games/Tomb\ Raider\ Legend/wine
 	cd ${HOME}/Games/Tomb\ Raider\ Legend
 	exec wine tr7.exe
 elif [ $1 = "tra" ]; then
-	export WINEPREFIX=${HOME}/.wine-trl
+	export WINEPREFIX=${HOME}/Games/Tomb\ Raider\ Legend/wine
 	cd ${HOME}/Games/Tomb\ Raider\ Anniversary
 	exec wine tra.exe
 elif [ $1 = "tru" ]; then
-	export WINEPREFIX=${HOME}/.wine-trl
+	export WINEPREFIX=${HOME}/Games/Tomb\ Raider\ Legend/wine
 	cd ${HOME}/Games/Tomb\ Raider\ Underworld
 	exec wine tru.exe
 elif [ $1 = "tr2013" ]; then
-	export WINEPREFIX=${HOME}/.wine-tr2013
+	export WINEPREFIX=${HOME}/Games/Tomb\ Raider\ GOTY/wine
 	cd ${HOME}/Games/Tomb\ Raider\ GOTY
 	exec wine TombRaider.exe
 elif [ $1 = "eso" ]; then
