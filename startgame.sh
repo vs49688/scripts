@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2>"
 	exit 2
 fi
 
@@ -65,6 +65,10 @@ elif [ $1 = "bpm" ]; then
 	export WINEPREFIX=${HOME}/Games/BPM/wine
 	cd ${HOME}/Games/BPM
 	exec wine ${HOME}/Games/BPM/WindowsNoEditor/BPMGame.exe
+elif [ $1 = "dh2" ]; then
+	cd ${HOME}/Games/Dishonored2
+	export WINEPREFIX=$PWD/wine
+	exec wine Dishonored2.exe
 fi
 #elif [ $1 = "hls" ]; then
 	#export WINEPREFIX=${HOME}/Games/HL/wine
