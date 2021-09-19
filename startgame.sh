@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa>"
 	exit 2
 fi
 
@@ -69,6 +69,10 @@ elif [ $1 = "dh2" ]; then
 	cd ${HOME}/Games/Dishonored2
 	export WINEPREFIX=$PWD/wine
 	exec wine Dishonored2.exe
+elif [ $1 = "toa" ]; then
+	cd ${HOME}/Games/TalesOfArise
+	export WINEPREFIX=$PWD/wine
+	exec wine "Arise/Binaries/Win64/Tales of Arise.exe" -culture=en_us
 fi
 #elif [ $1 = "hls" ]; then
 	#export WINEPREFIX=${HOME}/Games/HL/wine
