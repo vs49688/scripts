@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa|sc1>"
 	exit 2
 fi
 
@@ -73,6 +73,15 @@ elif [ $1 = "toa" ]; then
 	cd ${HOME}/Games/TalesOfArise
 	export WINEPREFIX=$PWD/wine
 	exec wine "Arise/Binaries/Win64/Tales of Arise.exe" -culture=en_us
+elif [ $1 = "sc1" ]; then
+	cd ${HOME}/Games/SplinterCell
+	export WINEPREFIX=$PWD/wine
+	sed -i \
+		-e 's/^Resolution=.*$/Resolution=1920x1080/g' \
+		-e 's/^DesiredFOV=.*$/DesiredFOV=85.0/g' \
+		-e 's/DefaultFOV=.*$/DefaultFOV=85.0/g' \
+		system/SplinterCellUser.ini
+	exec wine system/SplinterCell.exe
 fi
 #elif [ $1 = "hls" ]; then
 	#export WINEPREFIX=${HOME}/Games/HL/wine
