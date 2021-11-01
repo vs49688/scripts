@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa|sc1>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa|sc1|nierr>"
 	exit 2
 fi
 
@@ -82,6 +82,10 @@ elif [ $1 = "sc1" ]; then
 		-e 's/DefaultFOV=.*$/DefaultFOV=85.0/g' \
 		system/SplinterCellUser.ini
 	exec wine system/SplinterCell.exe
+elif [ $1 = "nierr" ]; then
+	cd ${HOME}/Games/NierReplicant
+	export WINEPREFIX=$PWD/wine
+	exec wine NieR\ Replicant\ ver.1.22474487139.exe
 fi
 #elif [ $1 = "hls" ]; then
 	#export WINEPREFIX=${HOME}/Games/HL/wine
