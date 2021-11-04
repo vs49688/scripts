@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa|sc1|nierr>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa|sc1|nierr|me1>"
 	exit 2
 fi
 
@@ -86,6 +86,10 @@ elif [ $1 = "nierr" ]; then
 	cd ${HOME}/Games/NierReplicant
 	export WINEPREFIX=$PWD/wine
 	exec wine NieR\ Replicant\ ver.1.22474487139.exe
+elif [ $1 = "me1" ]; then
+	cd ${HOME}/Games/MassEffect1LE
+	export WINEPREFIX=$PWD/wine
+	exec wine Game/ME1/Binaries/Win64/MassEffect1.exe -NoHomeDir -SeekFreeLoadingPCConsole -Subtitles 20 -OVERRIDELANGUAGE=INT
 fi
 #elif [ $1 = "hls" ]; then
 	#export WINEPREFIX=${HOME}/Games/HL/wine
