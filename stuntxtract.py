@@ -69,9 +69,8 @@ for a, entries in index.items():
         outpath = os.path.join('ext', path)
         os.makedirs(os.path.join('ext', dirname), exist_ok=True)
 
-        filedata = data[entry.offset + 4:entry.offset + entry.size]
         try:
-            decdata = zlib.decompress(filedata)
+            decdata = zlib.decompress(data[entry.offset + 4:entry.offset + entry.size])
         except zlib.error as e:
             msg = e.args[0]
 
@@ -82,7 +81,7 @@ for a, entries in index.items():
             else:
                 raise e
 
-            decdata = filedata
+            decdata = data[entry.offset:entry.offset + entry.size]
 
         with open(outpath, 'wb') as f:
             f.write(decdata)
