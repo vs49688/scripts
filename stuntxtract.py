@@ -1,10 +1,22 @@
 #!/usr/bin/env python3
+##
+# Extract LEGO Stunt Rally RFD/RFH archives.
+#
+# https://github.com/vs49688/scripts/
+# Zane van Iperen <zane@zanevaniperen.com>
+#
+# SPDX-License-Identifier: CC0-1.0
+#
+# Usage: stuntxtract.py <game-path> [out-path]
+##
 
 import struct
 import collections
 import os.path
 import subprocess
 import zlib
+import json
+import sys
 
 ARCHIVES = [
     'ART0001',
@@ -25,10 +37,21 @@ SRIndexEntry = collections.namedtuple('SRIndexEntry', [
     'path'
 ])
 
+if len(sys.argv) == 2:
+    gamedir = sys.argv[1]
+    outdir = '.'
+elif len(sys.argv) == 3:
+    gamedir = sys.argv[1]
+    outdir = sys.argv[2]
+else:
+    print(f'Usage: {sys.argv[0]} <game-path> [out-path]')
+    exit(2)
+
 index = {}
 
 for a in ARCHIVES:
-    with open(f'{a}.RFH', 'rb') as f:
+    rfh = os.path.join(gamedir, 'res', f'{a}.RFH')
+    with open(rfh, 'rb') as f:
         data = f.read()
 
     entries = []
@@ -55,19 +78,29 @@ for a in ARCHIVES:
 
     index[a] = entries
 
-os.makedirs('ext', exist_ok=True)
+os.makedirs(outdir, exist_ok=True)
 
 for a, entries in index.items():
-    with open(f'{a}.RFD', 'rb') as f:
+    rfd = os.path.join(gamedir, 'res', f'{a}.RFD')
+    with open(rfd, 'rb') as f:
         data = f.read()
 
     for entry in entries:
-        print(entry)
+        json.dump({
+            'unk1': entry.unk1,
+            'unk2': entry.unk2,
+            'unk3': entry.unk3,
+            'size': entry.size,
+            'offset': entry.offset,
+            'path': entry.path,
+        }, sys.stdout)
+        print()
+
         path = entry.path.replace('\\', '/')
         dirname = os.path.dirname(path)
 
-        outpath = os.path.join('ext', path)
-        os.makedirs(os.path.join('ext', dirname), exist_ok=True)
+        outpath = os.path.join(outdir, path)
+        os.makedirs(os.path.join(outdir, dirname), exist_ok=True)
 
         try:
             decdata = zlib.decompress(data[entry.offset + 4:entry.offset + entry.size])
