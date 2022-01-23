@@ -36,7 +36,8 @@ LANGS = {
     'turkish': 'tur',
     'estonian': 'est',
     'indonesian': 'ind',
-    'hebrew': 'heb'
+    'hebrew': 'heb',
+    'japanese': 'jpn',
 }
 DESTDIR = "/media/Collection1/Movies"
 
