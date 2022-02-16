@@ -20,10 +20,52 @@ import urllib.parse
 import re
 from collections import namedtuple
 import subprocess
+import os.path
 
-entry = namedtuple('entry', ['url', 'filename', 'issuer', 'label', 'username'])
 
-REGEX_LABEL = re.compile(r'^(.+):(.+)$')
+class Entry(object):
+    __slots__ = [
+        'filename',
+        'issuer',
+        'label',
+        'username',
+        'algorithm',
+        'digits',
+        'secret',
+        'type',
+        'period',  # TOTP only, optional, default 30
+        'counter', # HOTP only
+    ]
+
+    def build_url(self) -> str:
+        query = {
+            'secret': ee.secret,
+            'issuer': ee.issuer
+        }
+
+        if ee.algorithm != 'SHA1':
+            query['algorithm'] = ee.algorithm
+
+        if ee.digits != 6:
+            query['digits'] = ee.digits
+
+        if ee.period and ee.period != 30:
+            query['period'] = ee.period
+
+        if ee.counter:
+            query['counter'] = ee.counter
+
+        return urllib.parse.urlunparse((
+            'otpauth',
+            '',
+            urllib.parse.quote(os.path.join('//', ee.type.lower(), f'{ee.issuer}:{ee.label}')),
+            '',
+            urllib.parse.urlencode(query),
+            ''
+        ))
+
+
+REGEX_LABEL = re.compile(r'^(?:(.+):)?(.+)$')
 
 if len(sys.argv) != 3:
     print('Usage: {0} <name> <email>'.format(sys.argv[0]), file=sys.stderr)
@@ -46,69 +88,68 @@ for e in data:
 
 i = 0
 for e in data:
-    query = {
-        'algorithm': e['algorithm'],
-        'digits':    int(e['digits']),
-        'secret':    e['secret'],
-        'label':     e['label'],
-        'issuer':    e['issuer']
-    }
+
+    ee = Entry()
+    ee.algorithm = e['algorithm']
+    ee.digits = int(e['digits'])
+    ee.secret = e['secret']
+    ee.label = e['label']
+    ee.issuer = e['issuer']
+    ee.type = e['type']
+    ee.period = ''
 
     # These won't actually import correctly, but the user
     # should be able to decode it and add it manually
-    if e['type'] != 'STEAM':
-        query['period'] = int(e['period'])
+    if ee.type == 'TOTP':
+        ee.period = int(e['period'])
+        ee.counter = None
+    elif ee.type == 'HOTP':
+        ee.period = None
+        ee.counter = int(e['counter'])
+    elif ee.type == 'STEAM':
+        ee.period = None
+        ee.counter = None
+    else:
+        raise Exception(f'unknown type {ee.type}')
 
-    m = re.match(REGEX_LABEL, e['label'])
+    m = re.match(REGEX_LABEL, ee.label)
     if not m:
-        raise Exception(f'invalid label {e["label"]}')
+        raise Exception(f'invalid label {ee.label}')
 
-    parts = [
-        'otpauth',
-        e['type'].lower(),
-        urllib.parse.quote(e['label']),
-        '',
-        urllib.parse.urlencode(query),
-        ''
-    ]
+    ee.filename = 'qr_{0:0>2}.png'.format(i)
+    ee.username = m[2]
 
-    e = entry(
-        url=urllib.parse.urlunparse(parts),
-        filename='qr_{0:0>2}.png'.format(i),
-        issuer=e['issuer'],
-        label=e['label'],
-        username=m[2]
-    )
-    subprocess.run(['qrencode', '-t', 'PNG', '-v', '10', '-o', e.filename, '--', e.url], check=True)
-    urls.append(e)
+    subprocess.run(['qrencode', '-t', 'PNG', '-v', '10', '-o', ee.filename, '--', ee.build_url()], check=True)
+    urls.append(ee)
     #print('\\noindent\\includegraphics{{../qr_{0:0>2}.png}}'.format(i))
     i += 1
 
 
 #print(urls)
 
-print(r"""\documentclass[oneside]{article}
-\usepackage[margin=1in]{geometry}
-\usepackage{graphicx}
-\usepackage{parskip}
-\usepackage{hyperref}
-\usepackage{xurl}
-\usepackage{fancyhdr}
-\usepackage[style=default]{datetime2}
-\usepackage{lastpage}
+print(rf"""
+\documentclass[oneside]{{article}}
+\usepackage[margin=1in]{{geometry}}
+\usepackage{{graphicx}}
+\usepackage{{parskip}}
+\usepackage{{hyperref}}
+\usepackage{{xurl}}
+\usepackage{{fancyhdr}}
+\usepackage[style=default]{{datetime2}}
+\usepackage{{lastpage}}
 
-\pagestyle{fancy}
+\pagestyle{{fancy}}
 
-\fancyhf[HL]{\DTMnow}""")
+\lhead{{Backup MFA Codes}}
+\chead{{{name}}}
+\rhead{{{email}}}
 
-print(rf'\fancyhf[HC]{{Backup TOTP Codes -- {name} -- {email}}}')
+\lfoot{{Generated at \DTMnow}}
+\cfoot{{}}
+\rfoot{{Page \thepage\ of \pageref{{LastPage}}}}
 
-
-print(r"""
-\fancyhf[HR]{Page \thepage\ of \pageref{LastPage}}
-\fancyhf[FLCR]{}
-
-\begin{document}""")
+\begin{{document}}
+""")
 
 for i in range(len(urls)):
 
@@ -119,18 +160,25 @@ for i in range(len(urls)):
     if i % 2 == 0:
         print()
 
-    safeurl = urls[i].url.replace('%', '\\%')
-    #safeurl = safeurl.replace('&', '\\&')
-    #safeurl = safeurl.replace('_', '\\_')
+    secret = urls[i].secret
+    sec = ' '.join([secret[i:i+4] for i in range(0, len(secret), 4)])
+
+    typestring = f'{urls[i].type} -- {urls[i].algorithm} -- {urls[i].digits}'
+    if urls[i].period:
+        typestring = typestring + f' -- {urls[i].period}'
 
     print(r'    \begin{minipage}[t]{0.5\textwidth}')
     print(r'        \centering')
     print(r'        \includegraphics[width=0.9\textwidth]{{{0}}}'.format(urls[i].filename))
-    print()
-    print(r'        {0} \\ {1}'.format(urls[i].issuer, urls[i].username))
-    print(r'')
+    print(fr"""
+        \begin{{tabular}}{{p{{0.2\linewidth}}p{{0.7\linewidth}}}}
+            Username  & \texttt{{{urls[i].username}}} \\
+            Issuer    & {urls[i].issuer} \\
+            Type      & {typestring} \\
+            Secret    & \texttt{{{sec}}} \\
+        \end{{tabular}}
+""")
     print(r'        \vspace{\baselineskip}')
-    print(r'        \texttt{{\url{{{0}}}}}'.format(safeurl))
     print(r'    \end{minipage}', end='')
     
     if i % 2 == 0:
