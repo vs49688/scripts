@@ -32,6 +32,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `pdfreduce.sh`              | Reduce the DPI of a PDF file. |
 | `cdtoc.py`                  | ~~Convert a CTDB TOCID to a MusicBrainz one.~~ Doesn't work. |
 | `stuntxtract.py`            | Extract RFH/RFD files from LEGO Stunt Rally. |
+| `gocheck.sh`                | Helper script for Golang projects. |
 
 ## License
 
