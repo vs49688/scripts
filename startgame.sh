@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|dh2|toa|sc1|nierr|me1|me2>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|sc1|nierr|me1|me2|mcc>"
 	exit 2
 fi
 
@@ -65,14 +65,6 @@ elif [ $1 = "bpm" ]; then
 	export WINEPREFIX=${HOME}/Games/BPM/wine
 	cd ${HOME}/Games/BPM
 	exec wine ${HOME}/Games/BPM/WindowsNoEditor/BPMGame.exe
-elif [ $1 = "dh2" ]; then
-	cd ${HOME}/Games/Dishonored2
-	export WINEPREFIX=$PWD/wine
-	exec wine Dishonored2.exe
-elif [ $1 = "toa" ]; then
-	cd ${HOME}/Games/TalesOfArise
-	export WINEPREFIX=$PWD/wine
-	exec wine "Arise/Binaries/Win64/Tales of Arise.exe" -culture=en_us
 elif [ $1 = "sc1" ]; then
 	cd ${HOME}/Games/SplinterCell
 	export WINEPREFIX=$PWD/wine
@@ -87,14 +79,19 @@ elif [ $1 = "nierr" ]; then
 	export WINEPREFIX=$PWD/wine
 	exec wine NieR\ Replicant\ ver.1.22474487139.exe
 elif [ $1 = "me1" ]; then
-	cd ${HOME}/Games/MassEffect1LE
+	cd /media/Data2/Games/MassEffect1LE
 	export WINEPREFIX=$PWD/wine
 	exec wine Game/ME1/Binaries/Win64/MassEffect1.exe -NoHomeDir -SeekFreeLoadingPCConsole -Subtitles 20 -OVERRIDELANGUAGE=INT
 elif [ $1 = "me2" ]; then
-    cd ${HOME}/Games/MassEffect1LE
-    export WINEPREFIX=$PWD/wine
-    exec wine Game/ME2/Binaries/Win64/MassEffect2.exe -NoHomeDir -SeekFreeLoadingPCConsole -Subtitles 20 -OVERRIDELANGUAGE=INT
+	cd /media/Data2/Games/MassEffect1LE
+	export WINEPREFIX=$PWD/wine
+	exec wine Game/ME2/Binaries/Win64/MassEffect2.exe -NoHomeDir -SeekFreeLoadingPCConsole -Subtitles 20 -OVERRIDELANGUAGE=INT
+elif [ $1 = "mcc" ]; then
+	cd /media/Data2/Games/HaloMCC
+	export WINEPREFIX=$PWD/wine
+	exec wine mcclauncher.exe
 fi
+
 #elif [ $1 = "hls" ]; then
 	#export WINEPREFIX=${HOME}/Games/HL/wine
 #fi
