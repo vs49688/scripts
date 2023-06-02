@@ -5,7 +5,7 @@
 ##
 
 if [ $# -ne 1 ]; then
-	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|sc1|nierr|me1|me2|mcc>"
+	echo "Usage: $0 <trl|trldebug|tra|tru|tr2013|eso|ds2|dsr|bl|ac1|nier|soaser|bpm|hls|hl2|hl2ep1|hl2ep2|sc1|nierr|me1|me2|mcc|hoi4>"
 	exit 2
 fi
 
@@ -90,6 +90,10 @@ elif [ $1 = "mcc" ]; then
 	cd /media/Data2/Games/HaloMCC
 	export WINEPREFIX=$PWD/wine
 	exec wine mcclauncher.exe
+elif [ $1 = "hoi4" ]; then
+	cd /media/Data2/Games/HeartsOfIronIV
+	export WINEPREFIX=$PWD/wine
+	exec wine dowser.exe
 fi
 
 #elif [ $1 = "hls" ]; then
