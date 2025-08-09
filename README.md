@@ -33,6 +33,7 @@ Various assorted scripts, published so I don't lose them. Use them as you will.
 | `cdtoc.py`                  | ~~Convert a CTDB TOCID to a MusicBrainz one.~~ Doesn't work. |
 | `stuntxtract.py`            | Extract RFH/RFD files from LEGO Stunt Rally. |
 | `gocheck.sh`                | Helper script for Golang projects. |
+| `starscape_extract.py`      | Extract `Starscape.000`. |
 
 ## License
 

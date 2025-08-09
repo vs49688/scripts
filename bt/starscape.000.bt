@@ -1,0 +1,66 @@
+//------------------------------------------------
+//--- 010 Editor v12.0.1 Binary Template
+//
+//      File: Starscape.000
+//   Authors: Zane van Iperen
+//   Version: 1.0.0
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+LittleEndian();
+
+typedef struct MoonEntry{
+    char moon[4];
+    uint32 unk_04h;
+    uint16 unk_08h;
+    uint16 unk_0Ah;
+
+    ushort  unk_0Ch;
+    uint16  unk_0Eh;
+    uint16  unk_10h;
+    uint32  unk_12h; // compressed size?
+    uint32  unk_16h; // uncompressed size?
+
+    Assert(unk_12h == unk_16h); // I've never seen them different.
+
+    uint32 name_len;
+    char name[name_len];
+    
+    ubyte data[unk_12h];
+} MoonEntry;
+
+typedef struct PK0102Entry {
+    uint32 tag;
+    uint16 unk_04h[12];
+    uint16 name_len;
+    uint16 yy[8];
+    char name[name_len];
+} PK0102Entry;
+
+typedef struct PK0506Entry {
+    uint32 tag;
+    uint16 unk_04h[9];
+} PK0506Entry;
+
+
+struct {
+    local int64 num_entries = 0;
+    while(!FEof()) {
+        if(ReadUInt(FTell()) == 1313820493) {
+            MoonEntry moon;
+            num_entries += 1;
+        } else if(ReadUInt(FTell()) == 33639248) {
+            PK0102Entry pk_01_02;
+        } else if(ReadUInt(FTell()) == 101010256) {
+            PK0506Entry pk_05_06;
+        } else {
+            break;
+        }
+    }
+
+    Assert(FEof());
+} starscape;
