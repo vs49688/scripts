@@ -3,6 +3,9 @@
 # Extract "Starscape.000". Well, enough of it for the music.
 # No guarantees are provided for the other assets.
 #
+# This is very similar in structure to a ZIP and can probably be
+# converted to one with minimal effort. But alas, I don't care enough.
+#
 # See bt/starscape.000.bt
 #
 # https://github.com/vs49688/scripts/
@@ -78,15 +81,10 @@ with open(ss_path, 'rb') as f:
                 moon_entries.append(entry)
 
             case 0x02014B50:  # "PK\x01\x02"
-                # Irrelevant for our purposes
-                f.seek(28, os.SEEK_CUR)
-                name_len, = struct.unpack('<H', f.read(2))
-                f.seek(16, os.SEEK_CUR)
-                f.seek(name_len, os.SEEK_CUR)
-
-            case 0x6054b50:  # "PK\x05\x06"
-                # Irrelevant for our purposes
-                f.seek(22, os.SEEK_CUR)
+                # The rest of the file is actually a ZIP central directory,
+                # which seems to be redundant. Just skip it.
+                zipdata = f.read()
+                break
 
             case _:
                 raise RuntimeError(f'Unknown chunk {tag}')
@@ -104,3 +102,8 @@ with open(ss_path, 'rb') as f:
             f.write(entry.data)
 
         print(f'Wrote {entry.name} -> {ext_path}')
+
+    # if zipdata:
+    #     ext_path = out_dir / 'data.zip'
+    #     with open(ext_path, 'wb') as f:
+    #         f.write(zipdata)
